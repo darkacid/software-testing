@@ -1,11 +1,12 @@
 from selenium.webdriver import Chrome
+from selenium import webdriver
 import unittest
 
 from Pages import Homepage,VehiclePage
 import time
 class BaseTest(unittest.TestCase):
     def setUp(self):
-        self.driver = Chrome()
+        self.driver = webdriver.Remote(command_executor="http://localhost:4444/wd/hub",desired_capabilities={'browserName': 'chrome', 'javascriptEnabled': True})
     def tearDown(self):
         self.driver.quit()
     def screenshot(self):
