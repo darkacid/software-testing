@@ -7,7 +7,6 @@ from constants import *
 
 class BasePage:
 
-
     def __init__(self, driver):
         self.driver = driver
     def type_text(self,By,text):
@@ -30,7 +29,6 @@ class HomePage(BasePage):
         return SearchPage(self.driver)
 
 
-
 class SearchPage(BasePage):
 
     def get_result_text(self,text):
@@ -45,4 +43,19 @@ class SearchPage(BasePage):
 
 
 class AccountPage(BasePage):
-    pass
+    def click_my_account(self):
+        self.click(account_link)
+        return RegisterPage(self.driver)
+
+class RegisterPage(BasePage):
+    def clickEmail(self):
+        pass
+
+    def clickPassword(self):
+        pass
+
+    def clickPasswordConfirm(self):
+        pass
+
+    def enter_email(self):
+        pass
