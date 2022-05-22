@@ -28,6 +28,9 @@ class HomePage(BasePage):
         self.type_text(search_field, Keys.RETURN)
         return SearchPage(self.driver)
 
+    def click_account(self):
+        self.click(account_link)
+        return AccountPage(self.driver)
 
 class SearchPage(BasePage):
 
@@ -43,19 +46,27 @@ class SearchPage(BasePage):
 
 
 class AccountPage(BasePage):
-    def click_my_account(self):
-        self.click(account_link)
+    def click_register(self):
+        self.click(register_link)
         return RegisterPage(self.driver)
 
 class RegisterPage(BasePage):
-    def clickEmail(self):
-        pass
 
-    def clickPassword(self):
-        pass
+    def clickPrivacyCheckbox(self):
+        self.click(confirm_checkbox)
+    def enter_email(self,text):
+        self.type_text(email,text)
+    def enter_password(self,text):
+        self.type_text(password,text)
+    def enter_password_confirm(self,text):
+        self.type_text(password_confirm,text)
+    def enter_captcha(self,text):
+        self.type_text(captchaField, text)
 
-    def clickPasswordConfirm(self):
-        pass
-
-    def enter_email(self):
-        pass
+    def isRegisterAllowed(self):
+        # True if allowed, False otherwise
+        try:
+            self.driver.find_element(*submit_button_not_allowed) #Element is found if button is greyed out
+            return False
+        except:
+            return True

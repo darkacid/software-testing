@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver import Chrome
 from selenium import webdriver
 import unittest
@@ -60,14 +62,69 @@ class searchTest(BaseTest):
 
 class AccountTest(BaseTest):
 
-    def test_password_field_type01(self):
-        pass
-    def test_password_field_type02(self):
-        pass
 
     def test_skip_email(self):
-        pass
+        #Should fail email not written
+        home_page = HomePage(self.driver)
+        account_page = home_page.click_account()
+        register_page = account_page.click_register()
+        register_page.enter_password("password01")
+        register_page.enter_password_confirm("password01")
+        register_page.clickPrivacyCheckbox()
+        register_page.enter_captcha("4232")
+        time.sleep(1)
+        self.assertFalse(register_page.isRegisterAllowed())
 
+    def test_passwordMismatch(self):
+        #Should fail passwords don't match
+        home_page = HomePage(self.driver)
+        account_page = home_page.click_account()
+        register_page = account_page.click_register()
+        register_page.enter_email("valid@gmail.com")
+        register_page.enter_password("password01")
+        register_page.enter_password_confirm("password02")
+        register_page.clickPrivacyCheckbox()
+        register_page.enter_captcha("4232")
+        time.sleep(1)
+        self.assertFalse(register_page.isRegisterAllowed())
+
+    def test_invalidEmail(self):
+        # Should fail, email invalid
+        home_page = HomePage(self.driver)
+        account_page = home_page.click_account()
+        register_page = account_page.click_register()
+        register_page.enter_email("123")
+        register_page.enter_password("password01")
+        register_page.enter_password_confirm("password01")
+        register_page.clickPrivacyCheckbox()
+        register_page.enter_captcha("4232")
+        time.sleep(1)
+        self.assertFalse(register_page.isRegisterAllowed())
+
+    def test_privacyCheckboxNotClicked(self):
+        # Should fail, privacy checkbox not clicked
+        home_page = HomePage(self.driver)
+        account_page = home_page.click_account()
+        register_page = account_page.click_register()
+        register_page.enter_email("123")
+        register_page.enter_password("password01")
+        register_page.enter_password_confirm("password01")
+        register_page.enter_captcha("4232")
+        # register_page.clickPrivacyCheckbox()
+        time.sleep(1)
+        self.assertFalse(register_page.isRegisterAllowed())
+
+    def test_validRegister(self):
+        home_page = HomePage(self.driver)
+        account_page = home_page.click_account()
+        register_page = account_page.click_register()
+        register_page.enter_email("123")
+        register_page.enter_password("password01")
+        register_page.enter_password_confirm("password01")
+        register_page.enter_captcha("4232")
+        register_page.clickPrivacyCheckbox()
+        time.sleep(1)
+        self.assertTrue(register_page.isRegisterAllowed())
 
 
 if __name__ == '__main__':

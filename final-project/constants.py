@@ -11,5 +11,6 @@ email = [By.XPATH," //input[@id='_idyour_email']"]
 password = [By.XPATH,"//input[@id='_idpassword']"]
 password_confirm = [By.XPATH,"//input[@id='_idconfirm_password']"]
 confirm_checkbox = [By.XPATH,"//input[@id='_idagree']"]
-
+captchaField = [By.XPATH,"//input[@id='_idverification_number']"]
+submit_button_not_allowed = [By.XPATH," //input[@id='action__form_action0' and @class='sub']"]
 BASE_URL = "https://list.am/am"
